@@ -6,3 +6,5 @@ riderModule.iml
 /AufseherServer/appsettings.json
 /AufseherServer/appsettings.Development.json
 /AufseherServer.sln.DotSettings.user
+/AufseherServer/Properties/launchSettings.json
+/AufseherServer/wwwroot
