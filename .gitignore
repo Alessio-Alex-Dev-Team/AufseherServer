@@ -1,0 +1,8 @@
+bin/
+obj/
+/packages/
+riderModule.iml
+/_ReSharper.Caches/
+/AufseherServer/appsettings.json
+/AufseherServer/appsettings.Development.json
+/AufseherServer.sln.DotSettings.user
