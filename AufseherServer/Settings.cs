@@ -7,25 +7,7 @@ namespace AufseherServer
 	/// <param name="configuration"></param>
 	public class Settings(IConfiguration configuration)
 	{
-#if !DEBUG
-		public string DiscordClientId = Environment.GetEnvironmentVariable("API_DISCORD_CLIENT_ID") ??
-		                                throw new ArgumentNullException("API_DISCORD_CLIENT_ID");
 
-		public string DiscordClientSecret = Environment.GetEnvironmentVariable("API_DISCORD_CLIENT_SECRET") ??
-		                                    throw new ArgumentNullException("API_DISCORD_CLIENT_SECRET");
-
-		public string DiscordBotToken = Environment.GetEnvironmentVariable("API_DISCORD_BOT_TOKEN") ??
-		                                throw new ArgumentNullException("API_DISCORD_BOT_TOKEN");
-
-		public string YouTubeToken = Environment.GetEnvironmentVariable("API_YOUTUBE_SECRET") ??
-		                             throw new ArgumentNullException("API_YOUTUBE_SECRET");
-		
-		public string UserHash = Environment.GetEnvironmentVariable("API_USER_HASH") ??
-								throw new ArgumentNullException("API_USER_HASH");
-		
-		public string PwHash = Environment.GetEnvironmentVariable("API_PW_HASH") ??
-							throw new ArgumentNullException("API_PW_HASH");
-#else
 		public string DiscordClientId = configuration["Discord:Client:Id"] ??
 		                                throw new ArgumentNullException("Discord:Client:Id");
 
@@ -38,10 +20,12 @@ namespace AufseherServer
 		public string YouTubeToken = configuration["YouTube:Secret"] ??
 		                             throw new ArgumentNullException("YouTube:Secret");
 
-		public string UserHash = "1441b63c82b005285fc3b84cd69bd472eea279946b91764fe3637188a2e16b14";
-		public string PwHash = "08e21d654eb82c97a8fc04a32f81b0fd408b55d9ef2a42a17475e880cce5d602";
-#endif
-
-
+		public string UserHash = configuration["Login:UserHash"] ??
+		                         throw new ArgumentNullException("Login:UserHash");
+		
+		public string PwHash = configuration["Login:PwHash"] ??
+		                             throw new ArgumentNullException("Login:PwHash");
+		
+		
 	}
 }
