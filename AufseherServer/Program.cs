@@ -19,7 +19,7 @@ namespace AufseherServer
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseUrls("http://*:80", "https://*:443");
+                    webBuilder.UseUrls("http://0.0.0.0:80", "https://0.0.0.0:443");
                     webBuilder.UseStartup<Startup>();
                 });
     }
