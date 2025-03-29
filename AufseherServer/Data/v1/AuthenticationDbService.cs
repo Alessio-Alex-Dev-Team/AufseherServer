@@ -6,12 +6,14 @@ namespace AufseherServer.Data.v1
 {
 	public class AuthenticationDbService : IService
 	{
-		private readonly IMongoCollection<AuthenticationModel> _collection;
+		private readonly IMongoCollection<AuthenticationModel> _appAccessCollection;
+		private readonly IMongoCollection<BlacklistModel> _blacklistCollection;
 
 		public AuthenticationDbService(MongoDbService mongoDbService, IConfiguration configuration)
 		{
 			IMongoDatabase? db = mongoDbService.GetDatabase(configuration["MongoDB:GlobalDatabase"]);
-			_collection = db.GetCollection<AuthenticationModel>("AppAccess");
+			_appAccessCollection = db.GetCollection<AuthenticationModel>("AppAccess");
+			_blacklistCollection = db.GetCollection<BlacklistModel>("Blacklist");
 		}
 
         /// <summary>
@@ -21,8 +23,19 @@ namespace AufseherServer.Data.v1
         /// <param name="accessCode"></param>
         /// <returns></returns>
         public async Task<AuthenticationModel> GetUserByAccessCodeAsync(string accessCode) =>
-			await _collection
+			await _appAccessCollection
 				.Find(entry => entry.AccessCode == accessCode)
 				.FirstOrDefaultAsync();
+        
+        /// <summary>
+        /// Someone who isn't blacklisted won't be shown here.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<BlacklistModel> GetBlacklistEntryAsync(ulong userId) =>
+			await _blacklistCollection
+				.Find(entry => entry.UserId == userId)
+				.FirstOrDefaultAsync();
+        
 	}
 }

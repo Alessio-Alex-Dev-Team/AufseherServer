@@ -86,22 +86,29 @@ namespace AufseherServer.Controllers.v1
 			return Ok(returnValue);
 		}
 
-        /// <summary>
-        ///     This endpoint is used to verify that a user is registered.
-        /// </summary>
-        /// <param name="accessCode">The access code the user was provided with.</param>
-        /// <returns></returns>
-        [Route("user-access")]
+		/// <summary>
+		///     This endpoint is used to verify that a user is registered and permitted to access the app.
+		/// </summary>
+		/// <param name="accessCode">The access code the user was provided with.</param>
+		/// <returns></returns>
+		[Route("user-access")]
 		[HttpGet]
 		public async Task<ActionResult<AuthenticationModel>> CheckAccessAsync([FromQuery] string accessCode)
 		{
-			AuthenticationModel access = await authorizationService.GetUserByAccessCodeAsync(accessCode);
-			if (access == null)
+			try
 			{
-				return Unauthorized();
-			}
+				AuthenticationModel access = await authorizationService.GetUserByAccessCodeAsync(accessCode);
+				if (access == null)
+				{
+					return Unauthorized();
+				}
 
-			return Ok(access);
+				return Ok(access);
+			}
+			catch (InvalidOperationException ex)
+			{
+				return StatusCode(403, ex.Message);
+			}
 		}
 	}
 }

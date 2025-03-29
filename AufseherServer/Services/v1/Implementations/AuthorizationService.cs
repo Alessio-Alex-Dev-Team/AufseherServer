@@ -66,7 +66,20 @@ namespace AufseherServer.Services.v1.Implementations
 		public async Task<AuthenticationModel> GetUserByAccessCodeAsync(string code)
 		{
 			AuthenticationModel access = await authDbService.GetUserByAccessCodeAsync(code);
-			return access;
+			
+			if (access == null)
+			{
+				return null;
+			}
+			
+			BlacklistModel blacklist = await authDbService.GetBlacklistEntryAsync(access.UserId);
+			if (blacklist == null)
+			{
+				return access;
+			}
+			
+			throw new InvalidOperationException("User is blacklisted");
+			
 		}
 	}
 }
