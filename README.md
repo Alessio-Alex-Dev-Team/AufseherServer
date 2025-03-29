@@ -6,6 +6,9 @@ The Aufseher Discord app collects user data by observing their activity on a Dis
 
 This is more of a fun project and, at this time, does not aim to achieve any revenue or consistent use cases.
 
+# Context: Aufseher Discord app
+The Aufseher Discord app is a private gamification bot observing users activity; users can level up, mark messages in starboard and participate in community challenges to obtain rewards. The Discord app aims to improve the overall quality of content in the Discord server and has been greatly accepted by it's members.
+
 # Contributing
 Feel free to contribute by opening an issue or pull request. 
 
