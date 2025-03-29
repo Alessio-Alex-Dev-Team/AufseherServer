@@ -5,6 +5,7 @@ riderModule.iml
 /_ReSharper.Caches/
 /AufseherServer/appsettings.json
 /AufseherServer/appsettings.Development.json
+/AufseherServer/appsettings.Production.json
 /AufseherServer.sln.DotSettings.user
 /AufseherServer/Properties/launchSettings.json
 /AufseherServer/wwwroot
