@@ -4,7 +4,7 @@ using MongoDB.Driver;
 
 namespace AufseherServer.Data.v1
 {
-	public class LevelingDbService: IService
+	public class LevelingDbService : IService
 	{
 		private readonly IMongoCollection<LevelingModel> _collection;
 

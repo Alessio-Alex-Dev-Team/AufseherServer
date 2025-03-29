@@ -8,21 +8,24 @@ using AufseherServer.Services.v1.Interfaces;
 
 namespace AufseherServer.Services.v1.Implementations
 {
-	public class AuthorizationService(IConfiguration configuration, Settings settings, AuthenticationDbService authDbService)
+	public class AuthorizationService(
+		IConfiguration configuration,
+		Settings settings,
+		AuthenticationDbService authDbService)
 		: IAuthorizationService, IService
 	{
 		private readonly HttpClient _httpClient = new();
-		
+
 		private readonly string _redirectUri = configuration["Discord:Client:RedirectURI"] ??
-			throw new ArgumentNullException();
-		
+		                                       throw new ArgumentNullException();
+
 		private readonly string _tokenUrl = configuration["Discord:OAuth2:TokenURL"] ??
-			throw new ArgumentNullException();
-		
+		                                    throw new ArgumentNullException();
+
 		private readonly string _userUrl = configuration["Discord:OAuth2:UserURL"] ??
-			throw new ArgumentNullException();
-		
-		
+		                                   throw new ArgumentNullException();
+
+
 		public async Task<(int, string? ReasonPhrase)> HandleCallbackAsync(string code, string state)
 		{
 			ArgumentException.ThrowIfNullOrEmpty("code");
@@ -51,6 +54,7 @@ namespace AufseherServer.Services.v1.Implementations
 			{
 				return (400, "No access token provided");
 			}
+
 			return (200, element["access_token"].ToString());
 		}
 
@@ -66,20 +70,20 @@ namespace AufseherServer.Services.v1.Implementations
 		public async Task<AuthenticationModel> GetUserByAccessCodeAsync(string code)
 		{
 			AuthenticationModel access = await authDbService.GetUserByAccessCodeAsync(code);
-			
+
 			if (access == null)
 			{
 				return null;
 			}
-			
+
 			BlacklistModel blacklist = await authDbService.GetBlacklistEntryAsync(access.UserId);
 			if (blacklist == null)
 			{
 				return access;
 			}
-			
+
 			throw new InvalidOperationException("User is blacklisted");
-			
+
 		}
 	}
 }

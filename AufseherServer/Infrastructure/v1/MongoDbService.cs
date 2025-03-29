@@ -23,7 +23,7 @@ namespace AufseherServer.Infrastructure.v1
 			{
 				throw new ArgumentNullException(nameof(dbName));
 			}
-			
+
 			if (_databases.TryGetValue(dbName, out IMongoDatabase? value))
 			{
 				return value;
@@ -35,4 +35,4 @@ namespace AufseherServer.Infrastructure.v1
 			return value;
 		}
 	}
-} 
+}

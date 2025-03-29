@@ -11,7 +11,7 @@ namespace AufseherServer.Services.v1.Implementations
 		public async Task SendNotificationAsync(string uri)
 		{
 			string channelUri = configuration["YouTube:ChannelUri"]
-				?? throw new ArgumentNullException("YouTube:ChannelUri is not set in appsettings.json");
+			                    ?? throw new ArgumentNullException("YouTube:ChannelUri is not set in appsettings.json");
 
 			using var client = new HttpClient();
 			client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bot", settings.DiscordBotToken);

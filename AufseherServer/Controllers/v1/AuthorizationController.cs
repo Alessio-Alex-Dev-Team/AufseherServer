@@ -7,34 +7,34 @@ using Microsoft.Extensions.Primitives;
 
 namespace AufseherServer.Controllers.v1
 {
-    /// <summary>
-    ///     Handle OAuth2 logins for external applications using the Discord API.
-    /// </summary>
-    [ApiController]
+	/// <summary>
+	///     Handle OAuth2 logins for external applications using the Discord API.
+	/// </summary>
+	[ApiController]
 	[Route("api/v1/auth")]
 	public class AuthorizationController(IAuthorizationService authorizationService) : ControllerBase
 	{
-        /// <summary>
-        ///     Store the tokens for the users to log them in and avoid revealing Discord tokens.
-        /// </summary>
-        private static readonly Dictionary<string, JsonObject> TokenStore = new();
+		/// <summary>
+		///     Store the tokens for the users to log them in and avoid revealing Discord tokens.
+		/// </summary>
+		private static readonly Dictionary<string, JsonObject> TokenStore = new();
 
-        /// <summary>
-        ///     Sign the user in using the OAuth2 API from Discord.
-        ///     When the user is logged in, on iOS, we'll return to the application which will later call /user-data to get user
-        ///     data.
-        ///     On Web, we'll return the user object directly, to avoid unnecessary API calls.
-        /// </summary>
-        /// <param name="code">
-        ///     The callback code that is provided by Discords API calling this endpoint using the OAuth2 URl
-        ///     specified in the developer portal
-        /// </param>
-        /// <param name="state">
-        ///     A required state, which we use to determine the platform the user is operating on. This can be
-        ///     "web" or "ios" as of now
-        /// </param>
-        /// <returns></returns>
-        [Route("sign-in")]
+		/// <summary>
+		///     Sign the user in using the OAuth2 API from Discord.
+		///     When the user is logged in, on iOS, we'll return to the application which will later call /user-data to get user
+		///     data.
+		///     On Web, we'll return the user object directly, to avoid unnecessary API calls.
+		/// </summary>
+		/// <param name="code">
+		///     The callback code that is provided by Discords API calling this endpoint using the OAuth2 URl
+		///     specified in the developer portal
+		/// </param>
+		/// <param name="state">
+		///     A required state, which we use to determine the platform the user is operating on. This can be
+		///     "web" or "ios" as of now
+		/// </param>
+		/// <returns></returns>
+		[Route("sign-in")]
 		[HttpGet]
 		public async Task<IActionResult> OAuth2CallbackAsync([FromQuery] string code, [FromQuery] string state)
 		{
@@ -59,12 +59,12 @@ namespace AufseherServer.Controllers.v1
 			return Redirect("aufseherapp://auth?token=" + newToken);
 		}
 
-        /// <summary>
-        ///     This endpoint is used to get the user data from the token store.
-        ///     It is made specifically for mobile platforms, as we redirect the user to the app after the login.
-        /// </summary>
-        /// <returns>The OAuth2 User object according to Discords documentation</returns>
-        [Route("user-data")]
+		/// <summary>
+		///     This endpoint is used to get the user data from the token store.
+		///     It is made specifically for mobile platforms, as we redirect the user to the app after the login.
+		/// </summary>
+		/// <returns>The OAuth2 User object according to Discords documentation</returns>
+		[Route("user-data")]
 		[HttpGet]
 		public IActionResult UserDataAsync()
 		{
@@ -77,7 +77,7 @@ namespace AufseherServer.Controllers.v1
 			{
 				return Unauthorized();
 			}
-			
+
 			if (!TokenStore.TryGetValue(token!, out JsonObject? returnValue))
 			{
 				return Unauthorized();

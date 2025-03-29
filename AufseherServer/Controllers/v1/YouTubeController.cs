@@ -11,11 +11,11 @@ namespace AufseherServer.Controllers.v1
 		private readonly string _youtubeToken = settings.YouTubeToken;
 
 
-        /// <summary>
-        ///     Initial response when subscribing to the YouTube API.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
+		/// <summary>
+		///     Initial response when subscribing to the YouTube API.
+		/// </summary>
+		/// <returns></returns>
+		[HttpGet]
 		public IActionResult InitialResponse()
 		{
 			var hubChallenge = (string?)Request.Query["hub.challenge"];
@@ -28,11 +28,11 @@ namespace AufseherServer.Controllers.v1
 		}
 
 
-        /// <summary>
-        ///     Processing the notification from the YouTube API.
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost]
+		/// <summary>
+		///     Processing the notification from the YouTube API.
+		/// </summary>
+		/// <returns></returns>
+		[HttpPost]
 		public async Task<IActionResult> PushNotificationAsync()
 		{
 			if (Request.Headers.Authorization != _youtubeToken)

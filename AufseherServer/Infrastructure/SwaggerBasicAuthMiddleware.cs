@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AufseherServer.Infrastructure
 {
-	
+
 	/// <summary>
 	/// Original is from https://github.com/domaindrivendev/Swashbuckle.WebApi/issues/384#issuecomment-410117400
 	/// </summary>
@@ -12,7 +12,7 @@ namespace AufseherServer.Infrastructure
 	{
 		private readonly RequestDelegate next;
 		private readonly Settings _settings;
-		
+
 		public SwaggerBasicAuthMiddleware(RequestDelegate next, Settings settings)
 		{
 			this.next = next;
@@ -58,7 +58,7 @@ namespace AufseherServer.Infrastructure
 				await next.Invoke(context);
 			}
 		}
-		
+
 
 
 		public static string ComputeSha256Hash(string rawData)
@@ -72,6 +72,7 @@ namespace AufseherServer.Infrastructure
 				{
 					builder.Append(bytes[i].ToString("x2"));
 				}
+
 				return builder.ToString();
 			}
 		}
@@ -79,14 +80,14 @@ namespace AufseherServer.Infrastructure
 		public bool IsAuthorized(string username, string password)
 		{
 			// Check that username and password are correct
-			
+
 			string usernameHash = ComputeSha256Hash(username);
 			string pwHash = ComputeSha256Hash(password);
-			
-			
-            return usernameHash == _settings.UserHash && pwHash == _settings.PwHash;
+
+
+			return usernameHash == _settings.UserHash && pwHash == _settings.PwHash;
 		}
-			
+
 
 		public bool IsLocalRequest(HttpContext context)
 		{
