@@ -10,12 +10,12 @@ namespace AufseherServer.Data.v1
 
 		public AuthenticationDbService(MongoDbService mongoDbService, IConfiguration configuration)
 		{
-			IMongoDatabase? db = mongoDbService.GetDatabase(configuration["MongoDB:Database"]);
+			IMongoDatabase? db = mongoDbService.GetDatabase(configuration["MongoDB:GlobalDatabase"]);
 			_collection = db.GetCollection<AuthenticationModel>("AppAccess");
 		}
 
         /// <summary>
-        ///     Get the authenticatoin model for a user by their access code.
+        ///     Get the authentication model for a user by their access code.
         ///     This will be returned to the requester. The provided token is required to access the API.
         /// </summary>
         /// <param name="accessCode"></param>
