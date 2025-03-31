@@ -95,20 +95,21 @@ namespace AufseherServer.Controllers.v1
 		[HttpGet]
 		public async Task<ActionResult<AuthenticationModel>> CheckAccessAsync([FromQuery] string accessCode)
 		{
-			try
-			{
-				AuthenticationModel access = await authorizationService.GetUserByAccessCodeAsync(accessCode);
-				if (access == null)
-				{
-					return Unauthorized();
-				}
-
-				return Ok(access);
-			}
-			catch (InvalidOperationException ex)
-			{
-				return StatusCode(403, ex.Message);
-			}
+			return StatusCode(403, "Happy April 1st!"); // isn't displayed anyway but its a joke
+			// try
+			// {
+			// 	AuthenticationModel? access = await authorizationService.GetUserByAccessCodeAsync(accessCode);
+			// 	if (access == null)
+			// 	{
+			// 		return Unauthorized();
+			// 	}
+			//
+			// 	return Ok(access);
+			// }
+			// catch (InvalidOperationException ex)
+			// {
+			// 	return StatusCode(403, ex.Message);
+			// }
 		}
 	}
 }
