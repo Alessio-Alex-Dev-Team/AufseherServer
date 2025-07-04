@@ -12,7 +12,7 @@ The Aufseher Discord app is a private gamification bot observing users activity;
 # Contributing
 Feel free to contribute by opening an issue or pull request. 
 
-If you report an issue, please be so kind and briefly explain the result you were expecting and the one you were receiving. 
+If you report an issue, please be so kind and briefly explain the result you are expecting and the one you were receiving. 
 
 If you create a pull request, kindly specify what you're hoping to achieve. 
 
